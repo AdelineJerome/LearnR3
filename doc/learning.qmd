@@ -24,18 +24,28 @@ For fixing the name of the columns, the argument _.name_repair_ can be used. A f
 user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
 user_1_info_data <- vroom(user_1_info_file) # First import the file
 spec(user_1_info_data) # Print the column specifications
-user_1_info_data <- vroom(
-  user_1_info_file,
-  col_select = -1,
-  col_types = cols(
-    col_skip(),
-    gender = col_character(),
-    weight = col_double(),
-    height = col_double(),
-    age = col_double()
-  ), # col_types to force the type of data
-  .name_repair = snakecase::to_snake_case
-) # Import data again
+
+#' Import info data files
+#'
+#' @param file_path contains here(path of the file)
+#'
+#' @return info_data
+import_user_info <- function(file_path) {
+  info_data <- vroom(
+    file_path,
+    col_select = -1,
+    col_types = cols(
+      col_skip(),
+      gender = col_character(),
+      weight = col_double(),
+      height = col_double(),
+      age = col_double()
+    ), # col_types to force the type of data
+    .name_repair = snakecase::to_snake_case
+  ) # Import data again
+  return(info_data)
+}
+user_1_info_data <- import_user_info(user_1_info_file)
 ```
 ## Exercise: Import the saliva data
 
@@ -144,3 +154,7 @@ add_numbers <- function(num1, num2) {
 }
 add_numbers(2, 8)
 ```
+
+## Making a function for importing data
+
+Go back to what have been done and create functions around it.
