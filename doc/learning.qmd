@@ -119,3 +119,28 @@ user_1_actigraph_data <- vroom(
   .name_repair = snakecase::to_snake_case
 )
 ```
+
+## Making a function
+
+Basic structure of a function:
+name <- function(argument1, argument2) {
+    # body of function
+    output <- ... code ....
+    return(output)
+}
+
+Add a _roxygen_ to document the function. The _@export_ if when building packages (not used here).
+
+```{r}
+#' Add numbers
+#'
+#' @param num1 a number
+#' @param num2 a number
+#'
+#' @return The sum of two numbers
+add_numbers <- function(num1, num2) {
+  added <- num1 + num2
+  return(added)
+}
+add_numbers(2, 8)
+```
