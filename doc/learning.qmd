@@ -157,4 +157,56 @@ add_numbers(2, 8)
 
 ## Making a function for importing data
 
-Go back to what have been done and create functions around it.
+Go back to what has been done for user info and create a function around it to be used for all the users.
+
+```{r}
+#' Import info data files
+#'
+#' @param file_path contains here(path of the file)
+#'
+#' @return info_data
+import_user_info <- function(file_path) {
+  info_data <- vroom(
+    file_path,
+    col_select = -1,
+    col_types = cols(
+      col_skip(),
+      gender = col_character(),
+      weight = col_double(),
+      height = col_double(),
+      age = col_double()
+    ), # col_types to force the type of data
+    .name_repair = snakecase::to_snake_case
+  ) # Import data again
+  return(info_data)
+}
+import_user_info(user_1_info_file)
+```
+
+
+## Exercise for importing the saliva data as a function
+
+```{r}
+user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
+
+#' Import saliva data
+#'
+#' @param file_path contains here(path of the file)
+#'
+#' @return saliva_data
+import_saliva_data <- function(file_path) {
+  saliva_data <- vroom(
+    file_path,
+    col_select = -1,
+    col_types = cols(
+      col_skip(),
+      samples = col_character(),
+      cortisol_norm = col_double(),
+      melatonin_norm = col_double()
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(saliva_data)
+}
+import_saliva_data(user_1_saliva_file)
+```
