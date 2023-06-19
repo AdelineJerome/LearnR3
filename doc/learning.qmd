@@ -1,14 +1,38 @@
 ---
 title: "Draft R Markdown document"
 author: "Your Name"
-output: html_document
+format: html
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup}
+library(tidyverse)
+library(vroom)
+library(here)
 ```
+
+## Importing raw data
+
+To import data, here the library _vroom_ is used as it is faster that other type of importers. 
+
+For a person to read the code, it is important for the reader to know what are the types of data in the columns. To set the type of columns, import the data a first time with _vroom_. Then run _spec()_ to see the type of data that was assumed. Check that it is correct (for instance, be careful of time that is imported as double), copy/paste the resulting _cols()_ into the _col_types_ option of _vroom_.
+
+For importing data faster, it is possible to specify to import only a few columns with _col_select_ argument of _vroom_. Use the _-_ to remove one column, either with the column name or column number. It is also possible to have _cols_only()_ 
+
+For fixing the name of the columns, the argument _.name_repair_ can be used. A function can be put as entry for this. If writing the function with _()_, R runs the function first and then the _vroom_ function. By removing the _()_, R unerstands the function as an object now. Do not forget to update the name of the columns in the col_types.
 
 ```{r}
-# Code chunk
+user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
+user_1_info_data <- vroom(user_1_info_file) # First import the file
+spec(user_1_info_data) # Print the column specifications
+user_1_info_data <- vroom(
+  user_1_info_file,
+  col_select = -1,
+  col_types = cols(
+    gender = col_character(),
+    weight = col_double(),
+    height = col_double(),
+    age = col_double()
+  ), # col_types to force the type of data
+  .name_repair = snakecase::to_snake_case
+) # Import data again
 ```
-
