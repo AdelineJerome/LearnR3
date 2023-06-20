@@ -1,6 +1,6 @@
 ---
 title: "Draft R Markdown document"
-author: "Your Name"
+author: "Adeline"
 format: html
 ---
 
