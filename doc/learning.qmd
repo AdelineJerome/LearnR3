@@ -11,25 +11,14 @@ library(here)
 source(here("R/functions.R"))
 ```
 
-## Importing all user info data
-
 ```{r}
-user_info_files <- dir_ls(
-  here("data-raw/mmash/"),
-  regexp = "user_info.csv",
-  recurse = TRUE
+user_info_df <- import_multiple_files(
+  "user_info.csv",
+  import_user_info
 )
-user_info_df <- map(
-  user_info_files,
-  import_user_info # Without () for the function to be an object
-) %>%
-  list_rbind(names_to = "file_path_id") # bind by rows and adding the file path (the name of each dataframe in the list from map)
-user_info_df
+saliva_df <- import_multiple_files(
+  "saliva.csv",
+  import_saliva
+)
 ```
 
-
-## Exercise: Map on the other datasets
-
-```{r}
-import_multiple_files("saliva.csv", import_saliva)
-```
