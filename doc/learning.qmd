@@ -26,3 +26,10 @@ user_info_df <- map(
   list_rbind(names_to = "file_path_id") # bind by rows and adding the file path (the name of each dataframe in the list from map)
 user_info_df
 ```
+
+
+## Exercise: Map on the other datasets
+
+```{r}
+import_multiple_files("saliva.csv", import_saliva)
+```
