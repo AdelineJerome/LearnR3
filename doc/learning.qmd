@@ -5,9 +5,11 @@ format: html
 ---
 
 ```{r setup}
-library(tidyverse)
-library(vroom)
+#library(tidyverse)
+# library(vroom)
 library(here)
+
+source(here("R/functions.R"))
 ```
 
 ## Importing raw data
@@ -20,55 +22,47 @@ For importing data faster, it is possible to specify to import only a few column
 
 For fixing the name of the columns, the argument _.name_repair_ can be used. A function can be put as entry for this. If writing the function with _()_, R runs the function first and then the _vroom_ function. By removing the _()_, R unerstands the function as an object now. Do not forget to update the name of the columns in the col_types.
 
-```{r}
-user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
-user_1_info_data <- vroom(user_1_info_file) # First import the file
-spec(user_1_info_data) # Print the column specifications
+The code is deleted when in the function.
 
-#' Import info data files
-#'
-#' @param file_path contains here(path of the file)
-#'
-#' @return info_data
-import_user_info <- function(file_path) {
-  info_data <- vroom(
-    file_path,
-    col_select = -1,
-    col_types = cols(
-      col_skip(),
-      gender = col_character(),
-      weight = col_double(),
-      height = col_double(),
-      age = col_double()
-    ), # col_types to force the type of data
-    .name_repair = snakecase::to_snake_case
-  ) # Import data again
-  return(info_data)
-}
-user_1_info_data <- import_user_info(user_1_info_file)
+```{r}
+# user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
+# user_1_info_data <- vroom(user_1_info_file) # First import the file
+# spec(user_1_info_data) # Print the column specifications
+# user_1_info_data <- vroom(
+#   user_1_info_file,
+#   col_select = -1,
+#   col_types = cols(
+#     col_skip(),
+#       gender = col_character(),
+#       weight = col_double(),
+#       height = col_double(),
+#       age = col_double()
+#   ),# col_types to force the type of data
+#   .name_repair = snakecase::to_snake_case
+# )# Import data again
 ```
 ## Exercise: Import the saliva data
 
 ```{r}
-user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
-user_1_saliva_data_prep <- vroom(
-  user_1_saliva_file,
-  col_select = -1,
-  .name_repair = snakecase::to_snake_case
-)
-spec(user_1_saliva_data_prep)
-
-user_1_saliva_data <- vroom(
-  user_1_saliva_file,
-  col_select = -1,
-  col_types = cols(
-    col_skip(),
-    samples = col_character(),
-    cortisol_norm = col_double(),
-    melatonin_norm = col_double()
-  ),
-  .name_repair = snakecase::to_snake_case
-)
+# user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
+# user_1_saliva_data_prep <- vroom(
+#   user_1_saliva_file,
+#   col_select = -1,
+#   .name_repair = snakecase::to_snake_case
+# )
+# spec(user_1_saliva_data_prep)
+# 
+# user_1_saliva_data <- vroom(
+#   user_1_saliva_file,
+#   col_select = -1,
+#   col_types = cols(
+#     col_skip(),
+#     samples = col_character(),
+#     cortisol_norm = col_double(),
+#     melatonin_norm = col_double()
+#   ),
+#   .name_repair = snakecase::to_snake_case
+# )
 ```
 
 ## Importing longer datasets
@@ -157,56 +151,19 @@ add_numbers(2, 8)
 
 ## Making a function for importing data
 
-Go back to what has been done for user info and create a function around it to be used for all the users.
+Go back to what has been done for user info and create a function around it to be used for all the users. Then move it in _functions.R_ and source the file. It should be removed from this file in order to avoid overwriting the function after sourcing it.
 
 ```{r}
-#' Import info data files
-#'
-#' @param file_path contains here(path of the file)
-#'
-#' @return info_data
-import_user_info <- function(file_path) {
-  info_data <- vroom(
-    file_path,
-    col_select = -1,
-    col_types = cols(
-      col_skip(),
-      gender = col_character(),
-      weight = col_double(),
-      height = col_double(),
-      age = col_double()
-    ), # col_types to force the type of data
-    .name_repair = snakecase::to_snake_case
-  ) # Import data again
-  return(info_data)
-}
+user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
 import_user_info(user_1_info_file)
 ```
 
 
 ## Exercise for importing the saliva data as a function
 
+The function is now in _functions.R_.
+
 ```{r}
 user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
-
-#' Import saliva data
-#'
-#' @param file_path contains here(path of the file)
-#'
-#' @return saliva_data
-import_saliva_data <- function(file_path) {
-  saliva_data <- vroom(
-    file_path,
-    col_select = -1,
-    col_types = cols(
-      col_skip(),
-      samples = col_character(),
-      cortisol_norm = col_double(),
-      melatonin_norm = col_double()
-    ),
-    .name_repair = snakecase::to_snake_case
-  )
-  return(saliva_data)
-}
 import_saliva_data(user_1_saliva_file)
 ```

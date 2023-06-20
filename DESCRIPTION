@@ -2,6 +2,12 @@ Package: LearnR3
 Type: Project
 Version: 0.0.1
 Imports:
+    fs,
+    here,
     knitr,
-    rmarkdown
+    rmarkdown,
+    snakecase,
+    vroom
 Encoding: UTF-8
+Depends: 
+    tidyverse
