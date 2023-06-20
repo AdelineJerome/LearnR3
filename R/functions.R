@@ -107,3 +107,21 @@ import_multiple_files <- function(file_pattern, import_function) {
     list_rbind(names_to = "file_path_id")
   return(combined_data)
 }
+
+#' Extract user ID
+#'
+#' @param imported_data dataframe with imported data
+#'
+#' @return data_with_user_id
+extract_user_id <- function(imported_data) {
+  data_with_user_id <- imported_data %>%
+    mutate(
+      user_id = stringr::str_extract(
+        file_path_id,
+        "user_[1-9][0-9]?"
+      ),
+      .before = everything()
+    ) %>%
+    select(-file_path_id)
+  return(data_with_user_id)
+}
