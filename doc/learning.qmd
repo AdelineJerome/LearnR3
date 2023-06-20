@@ -154,7 +154,7 @@ add_numbers(2, 8)
 Go back to what has been done for user info and create a function around it to be used for all the users. Then move it in _functions.R_ and source the file. It should be removed from this file in order to avoid overwriting the function after sourcing it.
 
 ```{r}
-import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
+import_user_info(here::here("data-raw/mmash/user_1/user_info.csv"))
 ```
 
 
@@ -163,15 +163,15 @@ import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
 The function is now in _functions.R_.
 
 ```{r}
-import_saliva(here("data-raw/mmash/user_1/saliva.csv"))
+import_saliva(here::here("data-raw/mmash/user_1/saliva.csv"))
 ```
 
 ## Exercise for RR and Actigraph as functions
 
 ```{r}
-import_rr(here("data-raw/mmash/user_1/RR.csv"))
+import_rr(here::here("data-raw/mmash/user_1/RR.csv"))
 ```
 
 ```{r}
-import_actigraph(here("data-raw/mmash/user_1/Actigraph.csv"))
+import_actigraph(here::here("data-raw/mmash/user_1/Actigraph.csv"))
 ```
