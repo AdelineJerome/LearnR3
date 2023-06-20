@@ -5,10 +5,24 @@ format: html
 ---
 
 ```{r setup}
-# library(tidyverse)
-# library(vroom)
+library(tidyverse)
+library(fs)
 library(here)
-
 source(here("R/functions.R"))
 ```
 
+## Importing all user info data
+
+```{r}
+user_info_files <- dir_ls(
+  here("data-raw/mmash/"),
+  regexp = "user_info.csv",
+  recurse = TRUE
+)
+user_info_df <- map(
+  user_info_files,
+  import_user_info # Without () for the function to be an object
+) %>%
+  list_rbind(names_to = "file_path_id") # bind by rows and adding the file path (the name of each dataframe in the list from map)
+user_info_df
+```

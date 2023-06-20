@@ -5,6 +5,7 @@ Imports:
     fs,
     here,
     knitr,
+    purrr,
     rmarkdown,
     snakecase,
     vroom
