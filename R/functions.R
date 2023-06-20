@@ -24,7 +24,7 @@ import_user_info <- function(file_path) {
 #' @param file_path contains here(path of the file)
 #'
 #' @return saliva_data
-import_saliva_data <- function(file_path) {
+import_saliva <- function(file_path) {
     saliva_data <- vroom::vroom(
         file_path,
         col_select = -1,
@@ -37,4 +37,53 @@ import_saliva_data <- function(file_path) {
         .name_repair = snakecase::to_snake_case
     )
     return(saliva_data)
+}
+
+#' Import RR data
+#'
+#' @param file_path contains here(path of the file)
+#'
+#' @return rr_data
+import_rr <- function(file_path) {
+    rr_data <- vroom::vroom(
+        file_path,
+        col_select = -1,
+        col_types = vroom::cols(
+            vroom::col_skip(),
+            ibi_s = vroom::col_double(),
+            day = vroom::col_double(),
+            time = vroom::col_time(format = "")
+        ),
+        .name_repair = snakecase::to_snake_case
+    )
+    return(rr_data)
+}
+
+#' Import Actigraph data
+#'
+#' @param file_path contains here(path of the file)
+#'
+#' @return actigraph_data
+import_actigraph <- function(file_path) {
+    actigraph_data <- vroom::vroom(
+        file_path,
+        col_select = -1,
+        col_types = vroom::cols(
+            vroom::col_skip(),
+            axis_1 = vroom::col_double(),
+            axis_2 = vroom::col_double(),
+            axis_3 = vroom::col_double(),
+            steps = vroom::col_double(),
+            hr = vroom::col_double(),
+            inclinometer_off = vroom::col_double(),
+            inclinometer_standing = vroom::col_double(),
+            inclinometer_sitting = vroom::col_double(),
+            inclinometer_lying = vroom::col_double(),
+            vector_magnitude = vroom::col_double(),
+            day = vroom::col_double(),
+            time = vroom::col_time(format = "")
+        ),
+        .name_repair = snakecase::to_snake_case
+    )
+    return(actigraph_data)
 }
