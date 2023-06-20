@@ -9,6 +9,7 @@ Imports:
     purrr,
     rmarkdown,
     snakecase,
+    stringr,
     vroom
 Encoding: UTF-8
 Depends: 

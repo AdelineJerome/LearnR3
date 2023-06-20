@@ -11,3 +11,19 @@ library(here)
 source(here("R/functions.R"))
 options(dplyr.summarise.inform = FALSE)
 ```
+
+```{r}
+user_info_df <- import_multiple_files(
+  "user_info.csv",
+  import_user_info
+)
+user_info_df %>%
+  mutate(
+    user_id = str_extract(
+      file_path_id,
+      "user_[1-9][0-9]?"
+    ),
+    .before = everything()
+  ) %>% 
+    select(-file_path_id)
+```
