@@ -88,11 +88,14 @@ saliva_with_day_df <- saliva_df %>%
 
 mmash <- list(
   user_info_df,
-  saliva_with_day_df,
   summarised_rr_df,
-  summarised_actigraph_df
+  summarised_actigraph_df,
+  saliva_with_day_df
 ) %>%
   reduce(full_join)
 
 usethis::use_data(mmash, overwrite = TRUE)
 # to create a dataset in data/ (create the folder if it does not exists)
+
+saliva_with_day_df %>%
+    filter(user_id == "user_8")

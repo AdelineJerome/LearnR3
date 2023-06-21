@@ -30,7 +30,7 @@ mmash %>%
 import_multiple_files("Activity.csv", import_activity) %>%
   dplyr::mutate(
     activity_seconds = end - start,
-    activity_name = dplyr::case_when(
+    activity = dplyr::case_when(
       activity == 1 ~ "sleeping",
       activity == 2 ~ "laying down",
       activity == 3 ~ "sitting",
@@ -46,3 +46,11 @@ import_multiple_files("Activity.csv", import_activity) %>%
     )
   )
 ```
+
+## Exercise: Cleaning data
+
+```{r}
+mmash %>% 
+  filter(user_id == "user_8")
+```
+
