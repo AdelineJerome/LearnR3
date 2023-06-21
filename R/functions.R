@@ -207,3 +207,39 @@ import_sleep <- function(file_path) {
   )
   return(imported_sleep_data)
 }
+
+#' Import questionnaire
+#'
+#' @param file_path contains here(path of the file)
+#'
+#' @return imported_questionnaire_data
+import_questionnaire <- function(file_path) {
+  imported_questionnaire_data <- vroom::vroom(
+    file_path,
+    col_select = -1,
+    col_types = vroom::cols(
+      vroom::col_skip(),
+      meq = vroom::col_double(),
+      stai_1 = vroom::col_double(),
+      stai_2 = vroom::col_double(),
+      pittsburgh = vroom::col_double(),
+      daily_stress = vroom::col_double(),
+      bisbas_bis = vroom::col_double(),
+      bisbas_reward = vroom::col_double(),
+      bisbas_drive = vroom::col_double(),
+      bisbas_fun = vroom::col_double(),
+      panas_pos_10 = vroom::col_double(),
+      panas_pos_14 = vroom::col_double(),
+      panas_pos_18 = vroom::col_double(),
+      panas_pos_22 = vroom::col_double(),
+      panas_pos_9_1 = vroom::col_double(),
+      panas_neg_10 = vroom::col_double(),
+      panas_neg_14 = vroom::col_double(),
+      panas_neg_18 = vroom::col_double(),
+      panas_neg_22 = vroom::col_double(),
+      panas_neg_9_1 = vroom::col_double()
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(imported_questionnaire_data)
+}
