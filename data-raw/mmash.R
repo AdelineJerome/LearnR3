@@ -65,7 +65,7 @@ summarised_rr_df <- rr_df %>%
   group_by(user_id, day) %>%
   summarise(across(ibi_s, list(
     mean = ~ mean(.x, na.rm = TRUE), # and not mean alone so the treatment of missing value can be precised
-    sd = ~ sd(.x, na.rm = TRUE)
+    sd = ~ sd(.x, na.rm = TRUE) #na.rm = TRUE to exclude missing values
   ))) %>%
   ungroup() # to remove some metadata in the code to avoid issues in further wrangling
 
