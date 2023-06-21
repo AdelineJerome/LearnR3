@@ -65,9 +65,14 @@ summarised_rr_df <- rr_df %>%
   group_by(user_id, day) %>%
   summarise(across(ibi_s, list(
     mean = ~ mean(.x, na.rm = TRUE), # and not mean alone so the treatment of missing value can be precised
-    sd = ~ sd(.x, na.rm = TRUE) #na.rm = TRUE to exclude missing values
+    sd = ~ sd(.x, na.rm = TRUE) # na.rm = TRUE to exclude missing values
   ))) %>%
-  ungroup() # to remove some metadata in the code to avoid issues in further wrangling
+  ungroup() %>% # to remove some metadata in the code to avoid issues in further wrangling
+  mutate(day = dplyr::case_when(
+    day == 1 ~ 1,
+    day == 2 ~ 2,
+    day == -29 ~ 2
+  ))
 
 summarised_actigraph_df <- actigraph_df %>%
   group_by(user_id, day) %>%
@@ -75,7 +80,12 @@ summarised_actigraph_df <- actigraph_df %>%
     mean = ~ mean(.x, na.rm = TRUE),
     sd = ~ sd(.x, na.rm = TRUE)
   ))) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(day = dplyr::case_when(
+    day == 1 ~ 1,
+    day == 2 ~ 2,
+    day == -29 ~ 2
+  ))
 
 
 # Combined datasets -------------------------------------------------------
@@ -96,6 +106,3 @@ mmash <- list(
 
 usethis::use_data(mmash, overwrite = TRUE)
 # to create a dataset in data/ (create the folder if it does not exists)
-
-saliva_with_day_df %>%
-    filter(user_id == "user_8")
