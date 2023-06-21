@@ -153,3 +153,24 @@ tidy_summarise_by_day <- function(data, summary_fn) {
     )
   return(daily_summary)
 }
+
+#' Import activity
+#'
+#' @param file_path path to the "Activity.csv" file
+#'
+#' @return imported_activity_data
+import_activity <- function(file_path) {
+  imported_activity_data <- vroom::vroom(
+    file_path,
+    col_select = -1,
+    col_types = vroom::cols(
+      vroom::col_skip(),
+      activity = vroom::col_double(),
+      start = vroom::col_time(format = ""),
+      end = vroom::col_time(format = ""),
+      day = vroom::col_double()
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(imported_activity_data)
+}

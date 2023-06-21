@@ -23,3 +23,26 @@ mmash %>%
   )) %>%
   knitr::kable(caption = "Descriptive statistics")
 ```
+
+## Exercise: Importing activity data
+
+```{r}
+import_multiple_files("Activity.csv", import_activity) %>%
+  dplyr::mutate(
+    activity_seconds = end - start,
+    activity_name = dplyr::case_when(
+      activity == 1 ~ "sleeping",
+      activity == 2 ~ "laying down",
+      activity == 3 ~ "sitting",
+      activity == 4 ~ "light movement",
+      activity == 5 ~ "medium movement",
+      activity == 6 ~ "heavy movement",
+      activity == 7 ~ "eating",
+      activity == 8 ~ "small screen usage",
+      activity == 9 ~ "large screen usage",
+      activity == 10 ~ "coffee drinking",
+      activity == 11 ~ "smoking",
+      activity == 12 ~ "alcohol consumption"
+    )
+  )
+```
