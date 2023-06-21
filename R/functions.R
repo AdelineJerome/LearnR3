@@ -104,7 +104,8 @@ import_multiple_files <- function(file_pattern, import_function) {
     data_files,
     import_function
   ) %>%
-    list_rbind(names_to = "file_path_id")
+    purrr::list_rbind(names_to = "file_path_id") %>%
+    extract_user_id()
   return(combined_data)
 }
 
