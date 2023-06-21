@@ -116,13 +116,40 @@ import_multiple_files <- function(file_pattern, import_function) {
 #' @return data_with_user_id
 extract_user_id <- function(imported_data) {
   data_with_user_id <- imported_data %>%
-    mutate(
+    dplyr::mutate(
       user_id = stringr::str_extract(
         file_path_id,
         "user_[1-9][0-9]?"
       ),
       .before = everything()
     ) %>%
-    select(-file_path_id)
+    dplyr::select(-file_path_id)
   return(data_with_user_id)
+}
+
+#' Summarise data by day
+#'
+#' @param data data to be summarised
+#'
+#' @return daily_summary
+tidy_summarise_by_day <- function(data, summary_fn) {
+  daily_summary <- data %>%
+    dplyr::select(-samples) %>%
+    tidyr::pivot_longer(c(-user_id, -day, -gender)) %>%
+    tidyr::drop_na(day, gender) %>%
+    dplyr::group_by(gender, day, name) %>%
+    dplyr::summarise(dplyr::across(
+      value,
+      summary_fn
+    )) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(dplyr::across(
+      dplyr::starts_with("value"),
+      ~ round(.x, digits = 2)
+    )) %>%
+    tidyr::pivot_wider(
+      names_from = day,
+      values_from = starts_with("value")
+    )
+  return(daily_summary)
 }

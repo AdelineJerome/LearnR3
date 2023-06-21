@@ -13,16 +13,13 @@ options(dplyr.summarise.inform = FALSE)
 load(here("data/mmash.rda"))
 ```
 
-## Pivot longer
+## Testing the function
 
 ```{r}
 mmash %>%
-  select(-samples) %>%
-  pivot_longer(c(-user_id, -day, -gender)) %>%
-  group_by(gender, day, name) %>%
-  summarise(across(value, list(
+  tidy_summarise_by_day(list(
     mean = ~ mean(.x, na.rm = TRUE),
-    sd = ~ sd(.x, na.rm = TRUE)
-  ))) %>%
-  ungroup()
+    max = ~ max(.x, na.rm = TRUE)
+  )) %>%
+  knitr::kable(caption = "Descriptive statistics")
 ```
