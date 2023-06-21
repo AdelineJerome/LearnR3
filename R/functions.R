@@ -174,3 +174,36 @@ import_activity <- function(file_path) {
   )
   return(imported_activity_data)
 }
+
+#' Import sleep data
+#'
+#' @param file_path contains here(path of the file)
+#'
+#' @return imported_sleep_data
+import_sleep <- function(file_path) {
+  imported_sleep_data <- vroom::vroom(
+    file_path,
+    col_select = -1,
+    col_types = vroom::cols(
+      vroom::col_skip(),
+      in_bed_date = vroom::col_double(),
+      in_bed_time = vroom::col_time(format = ""),
+      out_bed_date = vroom::col_double(),
+      out_bed_time = vroom::col_time(format = ""),
+      onset_date = vroom::col_double(),
+      onset_time = vroom::col_time(format = ""),
+      latency = vroom::col_double(),
+      efficiency = vroom::col_double(),
+      total_minutes_in_bed = vroom::col_double(),
+      total_sleep_time_tst = vroom::col_double(),
+      wake_after_sleep_onset_waso = vroom::col_double(),
+      number_of_awakenings = vroom::col_double(),
+      average_awakening_length = vroom::col_double(),
+      movement_index = vroom::col_double(),
+      fragmentation_index = vroom::col_double(),
+      sleep_fragmentation_index = vroom::col_double()
+    ),
+    .name_repair = snakecase::to_snake_case
+  )
+  return(imported_sleep_data)
+}

@@ -47,10 +47,8 @@ import_multiple_files("Activity.csv", import_activity) %>%
   )
 ```
 
-## Exercise: Cleaning data
+## Import and process the sleep data
 
 ```{r}
-mmash %>% 
-  filter(user_id == "user_8")
+import_multiple_files("sleep.csv", import_sleep)
 ```
-
