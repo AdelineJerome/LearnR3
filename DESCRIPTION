@@ -10,9 +10,12 @@ Imports:
     rmarkdown,
     snakecase,
     stringr,
+    tidyr,
     vroom
 Encoding: UTF-8
 Depends: 
     R (>= 2.10),
     tidyverse
 LazyData: true
+URL: https://github.com/AdelineJerome/LearnR3
+BugReports: https://github.com/AdelineJerome/LearnR3/issues

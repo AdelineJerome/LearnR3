@@ -13,4 +13,16 @@ options(dplyr.summarise.inform = FALSE)
 load(here("data/mmash.rda"))
 ```
 
+## Pivot longer
 
+```{r}
+mmash %>%
+  select(-samples) %>%
+  pivot_longer(c(-user_id, -day, -gender)) %>%
+  group_by(gender, day, name) %>%
+  summarise(across(value, list(
+    mean = ~ mean(.x, na.rm = TRUE),
+    sd = ~ sd(.x, na.rm = TRUE)
+  ))) %>%
+  ungroup()
+```
