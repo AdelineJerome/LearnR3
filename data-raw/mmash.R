@@ -57,7 +57,14 @@ actigraph_df <- import_multiple_files(
   "Actigraph.csv",
   import_actigraph
 )
-
+sleep_df <- import_multiple_files(
+  "sleep.csv",
+  import_sleep
+)
+questionnaire_df <- import_multiple_files(
+  "questionnaire.csv",
+  import_questionnaire
+)
 
 # Summarised data ---------------------------------------------------------
 
@@ -100,7 +107,9 @@ mmash <- list(
   user_info_df,
   summarised_rr_df,
   summarised_actigraph_df,
-  saliva_with_day_df
+  saliva_with_day_df,
+  sleep_df,
+  questionnaire_df
 ) %>%
   reduce(full_join)
 

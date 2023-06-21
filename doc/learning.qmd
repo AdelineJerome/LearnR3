@@ -47,18 +47,5 @@ import_multiple_files("Activity.csv", import_activity) %>%
   )
 ```
 
-## Import and process the sleep data
 
-```{r}
-import_multiple_files("sleep.csv", import_sleep)
-```
 
-## Import and process the questionnaire data
-
-```{r}
-import_questionnaire(here::here("data-raw/mmash/user_1/questionnaire.csv"))
-import_multiple_files(
-  "questionnaire.csv",
-  import_questionnaire
-)
-```
